@@ -44,7 +44,7 @@
 
 <script>
   // Replace the following two values
-  const MoodContractAddress = 0xba7d8143a5edba7b73ab10ed119da47a59199478;
+  const MoodContractAddress = "0xba7d8143a5edba7b73ab10ed119da47a59199478";
   const MoodContractABI = [
     {
       inputs: [
@@ -77,4 +77,31 @@
   // Currently these two are undefined, we will use Ethers to assign them values
   let MoodContract = undefined;
   let signer = undefined;
+
+  const provider = new ethers.providers.Web3Provider(
+    window.ethereum,
+    "sepolia"
+  );
+
+  provider.send("eth_requestAccounts", []).then(() => {
+    provider.listAccounts().then((accounts) => {
+      signer = provider.getSigner(accounts[0]);
+      MoodContract = new ethers.Contract(
+        MoodContractAddress,
+        MoodContractABI,
+        signer
+      );
+    });
+  });
+
+  async function getMood() {
+    const mood = await MoodContract.getMood();
+    document.getElementById("showMood").innerText = `Your Mood: ${mood}`;
+    console.log(mood);
+  }
+
+  async function setMood() {
+    const mood = document.getElementById("mood").value;
+    await MoodContract.setMood(mood);
+  }
 </script>
