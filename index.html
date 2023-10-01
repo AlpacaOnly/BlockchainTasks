@@ -37,3 +37,44 @@
     </div>
   </body>
 </html>
+<script
+  src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"
+  type="application/javascript"
+></script>
+
+<script>
+  // Replace the following two values
+  const MoodContractAddress = 0xba7d8143a5edba7b73ab10ed119da47a59199478;
+  const MoodContractABI = [
+    {
+      inputs: [
+        {
+          internalType: "string",
+          name: "_mood",
+          type: "string",
+        },
+      ],
+      name: "setMood",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+    {
+      inputs: [],
+      name: "getMood",
+      outputs: [
+        {
+          internalType: "string",
+          name: "",
+          type: "string",
+        },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+  ];
+
+  // Currently these two are undefined, we will use Ethers to assign them values
+  let MoodContract = undefined;
+  let signer = undefined;
+</script>
